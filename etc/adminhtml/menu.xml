@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Buzzi_Publish::publish_queue" parent="Buzzi_Base::buzzi_menu" title="Publish Queue" action="buzzi_publish/queue/" resource="Buzzi_Publish::publish_queue" module="Buzzi_Publish" sortOrder="20"/>
+    </menu>
+</config>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <buzzi_base>
+            <publish>
+                <resend_max_time>5</resend_max_time>
+                <resend_frequency>Q</resend_frequency>
+                <remove_immediately>1</remove_immediately>
+                <removing_delay>1</removing_delay>
+            </publish>
+        </buzzi_base>
+    </default>
+</config>

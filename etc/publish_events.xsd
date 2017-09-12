@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="1" name="buzzi" type="buzziDeclaration" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="buzziDeclaration">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="publish_event" type="publishEvent" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="publishEvent">
+        <xs:sequence>
+            <xs:element name="label" minOccurs="1" maxOccurs="1" />
+            <xs:element name="type" minOccurs="1" maxOccurs="1" />
+            <xs:element name="cron_model" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="code" type="identifierType" use="required" />
+        <xs:attribute name="cron_only" type="cronOnly" />
+    </xs:complexType>
+
+    <xs:simpleType name="cronOnly">
+        <xs:restriction base="xs:boolean" />
+    </xs:simpleType>
+
+    <xs:simpleType name="identifierType">
+        <xs:annotation>
+            <xs:documentation>
+                Identifier can contain only [a-z_].
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z_]+" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

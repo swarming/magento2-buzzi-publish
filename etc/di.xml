@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Buzzi\Publish\Api\Data\SubmissionInterface" type="Buzzi\Publish\Model\Submission" />
+    <preference for="Buzzi\Publish\Api\SubmissionRepositoryInterface" type="Buzzi\Publish\Service\SubmissionRepository" />
+    <preference for="Buzzi\Publish\Api\QueueInterface" type="Buzzi\Publish\Service\Queue" />
+    <preference for="Buzzi\Publish\Api\PlatformInterface" type="Buzzi\Publish\Service\Platform" />
+
+    <type name="Buzzi\Publish\Model\Submission\PayloadPacker">
+        <arguments>
+            <argument name="payloadFile" xsi:type="object">Buzzi\Publish\Model\PayloadFile</argument>
+        </arguments>
+    </type>
+    <virtualType name="Buzzi\Publish\Model\PayloadFile" type="Buzzi\Base\Model\PayloadFile">
+        <arguments>
+            <argument name="subFolder" xsi:type="string">publish</argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Buzzi\Publish\Helper\DataBuilder\Base">
+        <arguments>
+            <argument name="session" xsi:type="object">Magento\Framework\Session\Generic\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Buzzi\Publish\Model\Config\Structure\Event">
+        <arguments>
+            <argument name="reader" xsi:type="object">Buzzi\Publish\Model\Config\Structure\Event\Reader\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="buzzi_publish_queue_data_source" xsi:type="string">Buzzi\Publish\Model\ResourceModel\Submission\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Buzzi\Publish\Model\ResourceModel\Submission\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="const">Buzzi\Publish\Model\ResourceModel\Submission::TABLE_NAME</argument>
+            <argument name="resourceModel" xsi:type="string">Buzzi\Publish\Model\ResourceModel\Submission</argument>
+        </arguments>
+    </virtualType>
+</config>

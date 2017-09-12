@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="admin_system_config_changed_section_buzzi_base">
+        <observer name="buzzi_publish" instance="Buzzi\Publish\Observer\EventsCronSetup" />
+    </event>
+    <event name="admin_system_config_changed_section_buzzi_publish_events">
+        <observer name="buzzi_publish" instance="Buzzi\Publish\Observer\EventsCronSetup" />
+    </event>
+</config>
