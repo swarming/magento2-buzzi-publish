@@ -36,7 +36,7 @@ class Base
     {
         $data = [
             'event_type' => $eventType,
-            'session_id' => $this->session->getSessionId(),
+            'session_id' => md5($this->session->getSessionId()),
             'timestamp' => $this->dateTime->gmDate(\DateTime::ATOM, (new \DateTime())->getTimestamp())
         ];
 
