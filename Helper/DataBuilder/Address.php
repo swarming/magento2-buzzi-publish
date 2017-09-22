@@ -51,7 +51,7 @@ class Address
      */
     protected function validateAndRenderAddress($address)
     {
-        return $address && $address->getId() ? $this->getAddressData($address) : '';
+        return $address && $address->getName() ? $this->getAddressData($address) : '';
     }
 
     /**
