@@ -40,17 +40,17 @@ class Cart
         $shippingAddress = $quote->getShippingAddress();
         $totals = $quote->getTotals();
         $payload = [
-            'order_id' => $order ? $order->getIncrementId() : '',
-            'quantity' => $quote->getItemsQty(),
-            'order_promo' => $quote->getCouponCode(),
-            'currency' => $quote->getQuoteCurrencyCode(),
-            'order_subtotal' => $this->getTotalValue($totals, 'subtotal'),
-            'order_shipping' => $this->getTotalValue($totals, 'shipping'),
-            'order_tax' => $this->getTotalValue($totals, 'tax'),
-            'order_discount' => $this->getTotalValue($totals, 'discount'),
-            'order_total' => $this->getTotalValue($totals, 'grand_total'),
-            'shipping_method' => $shippingAddress->getId() ? $shippingAddress->getShippingMethod() : '',
-            'shipping_carrier' => $shippingAddress->getId() ? $shippingAddress->getShippingDescription() : ''
+            'order_id' => $order ? (string)$order->getIncrementId() : '',
+            'quantity' => (int)$quote->getItemsQty(),
+            'order_promo' => $quote->getCouponCode() ? explode(',', $quote->getCouponCode()) : [],
+            'currency' => (string)$quote->getQuoteCurrencyCode(),
+            'order_subtotal' => (string)$this->getTotalValue($totals, 'subtotal'),
+            'order_shipping' => (string)$this->getTotalValue($totals, 'shipping'),
+            'order_tax' => (string)$this->getTotalValue($totals, 'tax'),
+            'order_discount' => (string)$this->getTotalValue($totals, 'discount'),
+            'order_total' => (string)$this->getTotalValue($totals, 'grand_total'),
+            'shipping_method' => (string)$shippingAddress->getShippingMethod(),
+            'shipping_carrier' => (string)$shippingAddress->getShippingDescription()
         ];
 
         $transport = new DataObject(['quote' => $quote, 'order' => $order, 'payload' => $payload]);
@@ -80,9 +80,9 @@ class Cart
         $items = $quote->getAllVisibleItems();
         foreach ($items as $item) {
             $itemPayload = $this->dataBuilderProduct->getProductData($item->getProduct());
-            $itemPayload['base_price'] = $item->getPrice();
-            $itemPayload['product_sku'] = $item->getSku();
-            $itemPayload['quantity'] = $item->getQty();
+            $itemPayload['base_price'] = (string)$item->getPrice();
+            $itemPayload['product_sku'] = (string)$item->getSku();
+            $itemPayload['quantity'] = (int)$item->getQty();
 
             $transport = new DataObject(['quote_item' => $item, 'product' => $item->getProduct(), 'payload' => $itemPayload]);
             $this->eventDispatcher->dispatch('buzzi_publish_cart_item_build_after', ['transport' => $transport]);

@@ -54,13 +54,13 @@ class Product
     public function getProductData($product)
     {
         $payload = [
-            'base_price' => $product->getPrice(),
+            'base_price' => (string)$product->getPrice(),
             'category' => $this->getProductCategories($product),
-            'product_sku' => $product->getSku(),
-            'product_name' => $product->getName(),
-            'product_description' => $product->getShortDescription(),
-            'product_image_url' => $this->getFrontendProductImageUrl($product),
-            'product_url' => $product->getProductUrl(),
+            'product_sku' => (string)$product->getSku(),
+            'product_name' => (string)$product->getName(),
+            'product_description' => (string)$product->getShortDescription(),
+            'product_image_url' => (string)$this->getFrontendProductImageUrl($product),
+            'product_url' => (string)$product->getProductUrl(),
         ];
 
         $transport = new DataObject(['product' => $product, 'payload' => $payload]);
@@ -71,7 +71,7 @@ class Product
 
     /**
      * @param \Magento\Catalog\Model\Product $product
-     * @return string
+     * @return string[]
      */
     protected function getProductCategories($product)
     {
@@ -79,8 +79,7 @@ class Product
         $categoryCollection = $this->categoryCollectionFactory->create();
         $categoryCollection->addIdFilter($categoryIds);
         $categoryCollection->addNameToResult();
-        $categoryNames = $categoryCollection->getColumnValues('name');
-        return implode(',', $categoryNames);
+        return $categoryCollection->getColumnValues('name');
     }
 
     /**

@@ -29,14 +29,14 @@ class Address
     public function getAddressData($address)
     {
         $payload = [
-            'company' => $address->getCompany(),
-            'name' => $address->getName(),
+            'company' => (string)$address->getCompany(),
+            'name' => (string)$address->getName(),
             'street' => implode(' ', (array)$address->getStreet()),
-            'state' => $address->getRegionCode(),
-            'city' => $address->getCity(),
-            'zip' => $address->getPostcode(),
-            'country' => $address->getCountryId(),
-            'phone' => $address->getTelephone(),
+            'state' => (string)$address->getRegionCode(),
+            'city' => (string)$address->getCity(),
+            'zip' => (string)$address->getPostcode(),
+            'country' => (string)$address->getCountryId(),
+            'phone' => (string)$address->getTelephone(),
         ];
 
         $transport = new DataObject(['address' => $address, 'payload' => $payload]);
@@ -47,11 +47,11 @@ class Address
 
     /**
      * @param \Magento\Customer\Model\Address|\Magento\Sales\Model\Order\Address|\Magento\Quote\Model\Quote\Address $address
-     * @return array|string
+     * @return array|null
      */
     protected function validateAndRenderAddress($address)
     {
-        return $address && $address->getName() ? $this->getAddressData($address) : '';
+        return $address && $address->getFirstname() ? $this->getAddressData($address) : null;
     }
 
     /**
