@@ -15,7 +15,7 @@ interface PlatformInterface
     public function send($eventType, $payload, $storeId);
 
     /**
-     * @param array $multipart
+     * @param mixed[] $multipart
      * @param int|null $storeId
      * @return void
      */

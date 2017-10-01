@@ -28,7 +28,7 @@ interface SubmissionInterface
 
     /**
      * @param int $submissionId
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setSubmissionId($submissionId);
 
@@ -39,7 +39,7 @@ interface SubmissionInterface
 
     /**
      * @param int $storeId
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setStoreId($storeId);
 
@@ -50,7 +50,7 @@ interface SubmissionInterface
 
     /**
      * @param string $eventType
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setEventType($eventType);
 
@@ -61,7 +61,7 @@ interface SubmissionInterface
 
     /**
      * @param bool $useFile
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setUseFile($useFile);
 
@@ -72,7 +72,7 @@ interface SubmissionInterface
 
     /**
      * @param string $payload
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setPayload($payload);
 
@@ -83,7 +83,7 @@ interface SubmissionInterface
 
     /**
      * @param int $counter
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setCounter($counter);
 
@@ -94,7 +94,7 @@ interface SubmissionInterface
 
     /**
      * @param string $eventId
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setEventId($eventId);
 
@@ -105,7 +105,7 @@ interface SubmissionInterface
 
     /**
      * @param string $creatingTime
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setCreatingTime($creatingTime);
 
@@ -116,7 +116,7 @@ interface SubmissionInterface
 
     /**
      * @param string $submissionTime
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setSubmissionTime($submissionTime);
 
@@ -127,7 +127,7 @@ interface SubmissionInterface
 
     /**
      * @param int $status
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setStatus($status);
 
@@ -138,7 +138,7 @@ interface SubmissionInterface
 
     /**
      * @param string $errorMessage
-     * @return $this
+     * @return \Buzzi\Publish\Api\Data\SubmissionInterface
      */
     public function setErrorMessage($errorMessage);
 
