@@ -40,6 +40,7 @@ class Cart
         $shippingAddress = $quote->getShippingAddress();
         $totals = $quote->getTotals();
         $payload = [
+            'cart_id' => (string)$quote->getId(),
             'order_id' => $order ? (string)$order->getIncrementId() : '',
             'quantity' => (int)$quote->getItemsQty(),
             'order_promo' => $quote->getCouponCode() ? explode(',', $quote->getCouponCode()) : [],
