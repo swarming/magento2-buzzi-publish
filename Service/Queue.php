@@ -189,7 +189,7 @@ class Queue implements \Buzzi\Publish\Api\QueueInterface
     {
         $submissions = $this->submissionCollectionFactory->create();
         $submissions->filterNotDone();
-        if ($submissions) {
+        if ($submissionIds) {
             $submissions->filterSubmissionIds($submissionIds);
         }
 
