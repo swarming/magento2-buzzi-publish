@@ -5,6 +5,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Buzzi\Publish\Api\PackerManagerInterface" type="Buzzi\Publish\Service\PackerManager" />
     <preference for="Buzzi\Publish\Api\Data\SubmissionInterface" type="Buzzi\Publish\Model\Submission" />
     <preference for="Buzzi\Publish\Api\SubmissionRepositoryInterface" type="Buzzi\Publish\Service\SubmissionRepository" />
     <preference for="Buzzi\Publish\Api\QueueInterface" type="Buzzi\Publish\Service\Queue" />

@@ -24,6 +24,7 @@
             <xs:element name="label" minOccurs="1" maxOccurs="1" />
             <xs:element name="type" minOccurs="1" maxOccurs="1" />
             <xs:element name="cron_model" minOccurs="0" maxOccurs="1" />
+            <xs:element name="packer_model" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="code" type="identifierType" use="required" />
         <xs:attribute name="cron_only" type="cronOnly" />

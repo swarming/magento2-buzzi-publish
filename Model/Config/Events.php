@@ -154,6 +154,15 @@ class Events
 
     /**
      * @param string $type
+     * @return string|null
+     */
+    public function getPackerModel($type)
+    {
+        return $this->getEventConfigValue($type, 'packer_model');
+    }
+
+    /**
+     * @param string $type
      * @param string $field
      * @param int|string|null $storeId
      * @return string

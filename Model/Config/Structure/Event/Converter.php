@@ -61,6 +61,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             if ($childNode->nodeName == 'cron_model') {
                 $eventData['cron_model'] = $childNode->nodeValue;
             }
+            if ($childNode->nodeName == 'packer_model') {
+                $eventData['packer_model'] = $childNode->nodeValue;
+            }
         }
 
         return $eventData;

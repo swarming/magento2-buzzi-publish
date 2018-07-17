@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Swarming Technology, LLC. All rights reserved.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- For current customer -->
+    <route url="/V1/buzzi/mine/publish-event" method="POST">
+        <service class="Buzzi\Publish\Api\PackerManagerInterface" method="deliver"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+
+    <!-- For guests -->
+    <route url="/V1/buzzi/guest/publish-event" method="POST">
+        <service class="Buzzi\Publish\Api\PackerManagerInterface" method="deliver"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+</routes>
