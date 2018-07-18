@@ -34,6 +34,11 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
     private $customerRegistry;
 
     /**
+     * @var \Magento\Framework\Stdlib\DateTime
+     */
+    private $dateTime;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
@@ -44,6 +49,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
      * @param \Buzzi\Publish\Api\QueueInterface $queue
      * @param \Buzzi\Publish\Service\PackerRepository $packerRepository
      * @param \Magento\Customer\Model\CustomerRegistry $customerRegistry
+     * @param \Magento\Framework\Stdlib\DateTime $dateTime
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -52,6 +58,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
         \Buzzi\Publish\Api\QueueInterface $queue,
         \Buzzi\Publish\Service\PackerRepository $packerRepository,
         \Magento\Customer\Model\CustomerRegistry $customerRegistry,
+        \Magento\Framework\Stdlib\DateTime $dateTime,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->configEvents = $configEvents;
@@ -59,6 +66,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
         $this->queue = $queue;
         $this->packerRepository = $packerRepository;
         $this->customerRegistry = $customerRegistry;
+        $this->dateTime = $dateTime;
         $this->logger = $logger;
     }
 
@@ -82,6 +90,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
             $payload = $packer->pack($inputData, $customer, $guestEmail);
 
             if ($payload) {
+                $payload = $this->updateCreatingTime($inputData, $payload);
                 $this->submitPayload($eventType, $payload);
             }
         } catch (\Exception $e) {
@@ -102,6 +111,19 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
         } else {
             $this->queue->send($eventType, $payload, $storeId);
         }
+    }
+
+    /**
+     * @param array $inputData
+     * @param array $payload
+     * @return array
+     */
+    private function updateCreatingTime($inputData, $payload)
+    {
+        if (!empty($inputData['creatingTime'])) {
+            $payload['timestamp'] = $this->dateTime->gmDate(\DateTime::ATOM, $inputData['creatingTime']);
+        }
+        return $payload;
     }
 
     /**

@@ -13,6 +13,9 @@ define([
         if (!buzziConfig.isAllowCollectGuestData() || !uniqueKey) {
             return;
         }
+
+        eventData.creatingTime = Math.round(new Date().getTime()/1000);
+
         var events = buzziStorage.has('events') ? buzziStorage.get('events') : {};
         var eventsGroup = events[eventType] || [];
 
