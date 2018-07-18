@@ -8,6 +8,8 @@
     <default>
         <buzzi_base>
             <publish>
+                <allow_collect_guest_data>1</allow_collect_guest_data>
+                <max_guest_events>20</max_guest_events>
                 <resend_max_time>5</resend_max_time>
                 <resend_frequency>Q</resend_frequency>
                 <remove_immediately>1</remove_immediately>

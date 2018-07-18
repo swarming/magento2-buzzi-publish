@@ -4,14 +4,13 @@
 
 define([
     'underscore',
-    'Buzzi_Publish/js/model/storage'
-], function (_, buzziStorage) {
+    'Buzzi_Publish/js/model/storage',
+    'Buzzi_Publish/js/model/config'
+], function (_, buzziStorage, buzziConfig) {
     "use strict";
 
-    var maxSavedEvents = 20;
-
     return function (eventType, eventData, uniqueKey) {
-        if (!uniqueKey) {
+        if (!buzziConfig.isAllowCollectGuestData() || !uniqueKey) {
             return;
         }
         var events = buzziStorage.has('events') ? buzziStorage.get('events') : {};
@@ -20,6 +19,7 @@ define([
         eventsGroup = _.without(eventsGroup, _.findWhere(eventsGroup, {key: uniqueKey}));
         eventsGroup.push({key: uniqueKey, eventData: eventData});
 
+        var maxSavedEvents = buzziConfig.getMaxGuestEvents();
         if (eventsGroup.length > maxSavedEvents) {
             eventsGroup = eventsGroup.slice(-maxSavedEvents);
         }

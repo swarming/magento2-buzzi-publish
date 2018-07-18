@@ -27,7 +27,31 @@
                     </depends>
                 </field>
 
-                <field id="global_cron_settings" translate="label" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="guests_settings" translate="label" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Guest Customers</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
+                    </depends>
+                </field>
+                <field id="allow_collect_guest_data" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Collect Guest Event Data</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
+                    </depends>
+                </field>
+                <field id="max_guest_events" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Max Guest Events Per Type</label>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
+                    </depends>
+                </field>
+
+                <field id="global_cron_settings" translate="label" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Global Publish Schedule</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                     <depends>
@@ -35,7 +59,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="custom_global_schedule" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                <field id="custom_global_schedule" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Custom Schedule</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
@@ -43,7 +67,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="global_schedule" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="global_schedule" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Schedule</label>
                     <comment>Enter if you know what you are doing. The value is not validated.</comment>
                     <depends>
@@ -52,7 +76,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="global_start_time" translate="label" type="time" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="global_start_time" translate="label" type="time" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Start Time</label>
                     <depends>
                         <field id="buzzi_base/general/enabled">1</field>
@@ -60,7 +84,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="global_frequency" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="global_frequency" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Frequency</label>
                     <source_model>Buzzi\Base\Model\Config\Source\CronFrequency</source_model>
                     <depends>
@@ -70,7 +94,7 @@
                     </depends>
                 </field>
 
-                <field id="resend_settings" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="resend_settings" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Resend</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                     <depends>
@@ -78,7 +102,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_enable" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                <field id="resend_enable" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Resend Failed Submissions</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
@@ -86,7 +110,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_max_time" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="resend_max_time" translate="label comment" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Maximum Resend Attempts</label>
                     <comment>The maximum number of times failed submissions will attempt to be sent. Leave empty or enter 0 for unlimited attempts.</comment>
                     <validate>validate-digits validate-zero-or-greater</validate>
@@ -97,7 +121,7 @@
                     </depends>
                 </field>
 
-                <field id="resend_cron_settings" translate="label" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="resend_cron_settings" translate="label" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Resend Cron</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                     <depends>
@@ -106,7 +130,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_custom_schedule" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                <field id="resend_custom_schedule" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Custom Schedule</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
@@ -115,7 +139,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_schedule" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="resend_schedule" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Schedule</label>
                     <comment>Enter if you know what you are doing. The value is not validated.</comment>
                     <backend_model>Buzzi\Publish\Model\Config\System\Backend\CronResend</backend_model>
@@ -126,7 +150,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_start_time" translate="label" type="time" sortOrder="140" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="resend_start_time" translate="label" type="time" sortOrder="170" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Start Time</label>
                     <depends>
                         <field id="buzzi_base/general/enabled">1</field>
@@ -135,7 +159,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="resend_frequency" translate="label" type="select" sortOrder="150" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="resend_frequency" translate="label" type="select" sortOrder="180" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Frequency</label>
                     <source_model>Buzzi\Base\Model\Config\Source\CronFrequency</source_model>
                     <backend_model>Buzzi\Publish\Model\Config\System\Backend\CronResend</backend_model>
@@ -147,7 +171,7 @@
                     </depends>
                 </field>
 
-                <field id="cleaning_settings" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="cleaning_settings" translate="label" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Queue Cleaning</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                     <depends>
@@ -155,7 +179,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="remove_immediately" translate="label comment" type="select" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                <field id="remove_immediately" translate="label comment" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Remove Immediately</label>
                     <comment>Successfully published submissions are deleted immediately.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -164,7 +188,7 @@
                         <field id="enabled_publish">1</field>
                     </depends>
                 </field>
-                <field id="removing_delay" translate="label comment" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                <field id="removing_delay" translate="label comment" type="text" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Removing Delay (days)</label>
                     <comment><![CDATA[<strong style="color:red">Important!</strong> Please note that the queue table might grow quickly (depending on the traffic and enabled events) and that every row could be big.]]></comment>
                     <validate>validate-digits validate-zero-or-greater</validate>
