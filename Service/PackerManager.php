@@ -19,6 +19,11 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
     private $storeResolver;
 
     /**
+     * @var \Buzzi\Publish\Helper\Customer
+     */
+    private $customerHelper;
+
+    /**
      * @var \Buzzi\Publish\Api\QueueInterface
      */
     private $queue;
@@ -46,6 +51,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
     /**
      * @param \Buzzi\Publish\Model\Config\Events $configEvents
      * @param \Magento\Store\Api\StoreResolverInterface $storeResolver
+     * @param \Buzzi\Publish\Helper\Customer $customerHelper
      * @param \Buzzi\Publish\Api\QueueInterface $queue
      * @param \Buzzi\Publish\Service\PackerRepository $packerRepository
      * @param \Magento\Customer\Model\CustomerRegistry $customerRegistry
@@ -55,6 +61,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
     public function __construct(
         \Buzzi\Publish\Model\Config\Events $configEvents,
         \Magento\Store\Api\StoreResolverInterface $storeResolver,
+        \Buzzi\Publish\Helper\Customer $customerHelper,
         \Buzzi\Publish\Api\QueueInterface $queue,
         \Buzzi\Publish\Service\PackerRepository $packerRepository,
         \Magento\Customer\Model\CustomerRegistry $customerRegistry,
@@ -63,6 +70,7 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
     ) {
         $this->configEvents = $configEvents;
         $this->storeResolver = $storeResolver;
+        $this->customerHelper = $customerHelper;
         $this->queue = $queue;
         $this->packerRepository = $packerRepository;
         $this->customerRegistry = $customerRegistry;
@@ -85,6 +93,10 @@ class PackerManager implements \Buzzi\Publish\Api\PackerManagerInterface
 
         try {
             $customer = $this->getCustomer($customerId, $guestEmail);
+
+            if ($customer && !$this->customerHelper->isExceptsMarketing($customer->getDataModel())) {
+                return;
+            }
 
             $packer = $this->packerRepository->getPacker($eventType);
             $payload = $packer->pack($inputData, $customer, $guestEmail);

@@ -6,9 +6,10 @@ define([
     'jquery',
     'mage/storage',
     'Magento_Customer/js/customer-data',
+    'Buzzi_Publish/js/model/config',
     'Buzzi_Publish/js/action/save-event',
     'Buzzi_Publish/js/action/guest-email'
-], function ($, storage, customerData, saveEvent, guestEmail) {
+], function ($, storage, customerData, buzziConfig, saveEvent, guestEmail) {
     "use strict";
 
     return function (eventType, inputData, uniqueKey) {
@@ -18,6 +19,10 @@ define([
         var url = isLoggedIn ? '/rest/V1/buzzi/mine/publish-event' : '/rest/V1/buzzi/guest/publish-event';
         if (!isLoggedIn && !email) {
             saveEvent(eventType, inputData, uniqueKey);
+            return;
+        }
+
+        if (isLoggedIn && !buzziConfig.isExceptsMarketing()) {
             return;
         }
 

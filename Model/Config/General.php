@@ -10,6 +10,9 @@ class General extends \Buzzi\Base\Model\Config\General
 {
     const XML_PATH_ENABLED_PUBLISH = 'buzzi_base/publish/enabled_publish';
     const XML_PATH_EVENTS = 'buzzi_base/publish/events';
+
+    const XML_PATH_DEFAULT_EXCEPTS_MARKETING = 'buzzi_base/publish/default_excepts_marketing';
+
     const XML_PATH_RESEND_ENABLE = 'buzzi_base/publish/resend_enable';
     const XML_PATH_RESEND_MAX_TIME = 'buzzi_base/publish/resend_max_time';
 
@@ -41,6 +44,15 @@ class General extends \Buzzi\Base\Model\Config\General
     {
         $eventTypes = $this->scopeConfig->getValue(self::XML_PATH_EVENTS, $this->scopeDefiner->getScope(), $storeId);
         return $eventTypes ? explode(',', $eventTypes) : [];
+    }
+
+    /**
+     * @param int|null $storeId
+     * @return bool
+     */
+    public function getDefaultExceptsMarketing($storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_DEFAULT_EXCEPTS_MARKETING, ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     /**

@@ -11,6 +11,16 @@
     <preference for="Buzzi\Publish\Api\QueueInterface" type="Buzzi\Publish\Service\Queue" />
     <preference for="Buzzi\Publish\Api\PlatformInterface" type="Buzzi\Publish\Service\Platform" />
 
+    <type name="Buzzi\Publish\Helper\Customer">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Customer\Api\AccountManagementInterface">
+        <plugin name="buzzi_publish_excepts_marketing" type="Buzzi\Publish\Plugin\Customer\AccountManagement" />
+    </type>
+
     <type name="Buzzi\Publish\Model\Submission\PayloadPacker">
         <arguments>
             <argument name="payloadFile" xsi:type="object">Buzzi\Publish\Model\PayloadFile</argument>

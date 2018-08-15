@@ -18,6 +18,14 @@
                     </depends>
                 </field>
 
+                <field id="default_excepts_marketing" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Default Excepts Marketing</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                    </depends>
+                </field>
+
                 <field id="events" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Events</label>
                     <source_model>Buzzi\Publish\Model\Config\System\Source\EventType</source_model>

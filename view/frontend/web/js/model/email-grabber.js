@@ -13,7 +13,7 @@ define([
     'use strict';
 
     if (!buzziConfig.isAllowCollectGuestData()) {
-        buzziStorage.clear();
+        buzziStorage.unset('events');
         return;
     }
 
