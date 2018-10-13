@@ -7,7 +7,7 @@ namespace Buzzi\Publish\Plugin\Customer;
 
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
-use Buzzi\Publish\Helper\Customer as CustomerHelper;
+use Buzzi\Publish\Helper\ExceptsMarketing;
 
 class AccountManagement
 {
@@ -67,10 +67,10 @@ class AccountManagement
      */
     private function processDefaultExceptsMarketing(CustomerInterface $customer)
     {
-        $exceptsMarketingAttribute = $customer->getCustomAttribute(CustomerHelper::ATTR_EXCEPTS_MARKETING);
+        $exceptsMarketingAttribute = $customer->getCustomAttribute(ExceptsMarketing::CUSTOMER_ATTR);
         if (!$exceptsMarketingAttribute || $exceptsMarketingAttribute->getValue() === false) {
             $customer->setCustomAttribute(
-                CustomerHelper::ATTR_EXCEPTS_MARKETING,
+                ExceptsMarketing::CUSTOMER_ATTR,
                 (int)$this->configGeneral->getDefaultExceptsMarketing($customer->getStoreId())
             );
         }

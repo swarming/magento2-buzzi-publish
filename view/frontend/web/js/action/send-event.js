@@ -22,10 +22,6 @@ define([
             return;
         }
 
-        if (isLoggedIn && !buzziConfig.isExceptsMarketing()) {
-            return;
-        }
-
         var eventData = {
             eventType: eventType,
             inputData: inputData,

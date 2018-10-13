@@ -8,7 +8,7 @@ namespace Buzzi\Publish\Setup;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Customer\Model\Customer;
-use Buzzi\Publish\Helper\Customer as CustomerHelper;
+use Buzzi\Publish\Helper\ExceptsMarketing;
 
 class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 {
@@ -77,7 +77,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 
         $customerSetup->addAttribute(
             Customer::ENTITY,
-            CustomerHelper::ATTR_EXCEPTS_MARKETING,
+            ExceptsMarketing::CUSTOMER_ATTR,
             [
                 'label'      => 'Excepts Marketing',
                 'type'       => 'int',
@@ -92,7 +92,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             ]
         );
 
-        $attribute = $this->eavConfig->getAttribute(Customer::ENTITY, CustomerHelper::ATTR_EXCEPTS_MARKETING);
+        $attribute = $this->eavConfig->getAttribute(Customer::ENTITY, ExceptsMarketing::CUSTOMER_ATTR);
         $attribute->addData(['used_in_forms' => ['adminhtml_customer', 'customer_account_create']]);
         $attribute->save();
 
@@ -109,7 +109,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             function ($customerCollectionFactory) {
                 /** @var \Magento\Customer\Model\ResourceModel\Customer\Collection $customerCollection */
                 $customerCollection = $customerCollectionFactory->create();
-                $customerCollection->setDataToAll(CustomerHelper::ATTR_EXCEPTS_MARKETING, 1);
+                $customerCollection->setDataToAll(ExceptsMarketing::CUSTOMER_ATTR, 1);
                 $customerCollection->save();
             },
             [$this->customerCollectionFactory]
