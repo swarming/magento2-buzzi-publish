@@ -61,7 +61,6 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 
         if (version_compare($context->getVersion(), '1.1.0', '<')) {
             $this->addExceptsMarketingCustomerAttribute($setup);
-            $this->updateExceptsMarketingCustomerValues();
         }
 
         $setup->endSetup();
@@ -81,7 +80,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             [
                 'label'      => 'Excepts Marketing',
                 'type'       => 'int',
-                'input'      => 'select',
+                'input'      => 'boolean',
                 'source'     => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
                 'system'     => false,
                 'visible'    => true,
@@ -97,22 +96,5 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
         $attribute->save();
 
         $this->eavConfig->clear();
-    }
-
-    /**
-     * @return void
-     */
-    private function updateExceptsMarketingCustomerValues()
-    {
-        $this->appState->emulateAreaCode(
-            'adminhtml',
-            function ($customerCollectionFactory) {
-                /** @var \Magento\Customer\Model\ResourceModel\Customer\Collection $customerCollection */
-                $customerCollection = $customerCollectionFactory->create();
-                $customerCollection->setDataToAll(ExceptsMarketing::CUSTOMER_ATTR, 1);
-                $customerCollection->save();
-            },
-            [$this->customerCollectionFactory]
-        );
     }
 }

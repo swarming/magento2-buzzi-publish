@@ -5,6 +5,7 @@
 namespace Buzzi\Publish\Helper;
 
 use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Customer\Model\Customer;
 
 class ExceptsMarketing
 {
@@ -21,15 +22,23 @@ class ExceptsMarketing
     private $configEvents;
 
     /**
+     * @var \Magento\Eav\Model\Config
+     */
+    private $eavConfig;
+
+    /**
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \Buzzi\Publish\Model\Config\Events $configEvents
+     * @param \Magento\Eav\Model\Config $eavConfig
      */
     public function __construct(
         \Magento\Customer\Model\Session $customerSession,
-        \Buzzi\Publish\Model\Config\Events $configEvents
+        \Buzzi\Publish\Model\Config\Events $configEvents,
+        \Magento\Eav\Model\Config $eavConfig
     ) {
         $this->customerSession = $customerSession;
         $this->configEvents = $configEvents;
+        $this->eavConfig = $eavConfig;
     }
 
     /**
@@ -57,6 +66,8 @@ class ExceptsMarketing
     private function isExceptsMarketing($customer)
     {
         $exceptsMarketingAttribute = $customer->getCustomAttribute(self::CUSTOMER_ATTR);
-        return $exceptsMarketingAttribute ? $exceptsMarketingAttribute->getValue() : false;
+        return $exceptsMarketingAttribute
+            ? (bool)$exceptsMarketingAttribute->getValue()
+            : (bool)$this->eavConfig->getAttribute(Customer::ENTITY, self::CUSTOMER_ATTR)->getDefaultValue();
     }
 }
