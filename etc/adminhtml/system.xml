@@ -18,8 +18,8 @@
                     </depends>
                 </field>
 
-                <field id="default_excepts_marketing" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Default Excepts Marketing</label>
+                <field id="default_accepts_marketing" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Default Accepts Marketing</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
                         <field id="buzzi_base/general/enabled">1</field>

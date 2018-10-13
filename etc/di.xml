@@ -11,17 +11,17 @@
     <preference for="Buzzi\Publish\Api\QueueInterface" type="Buzzi\Publish\Service\Queue" />
     <preference for="Buzzi\Publish\Api\PlatformInterface" type="Buzzi\Publish\Service\Platform" />
 
-    <type name="Buzzi\Publish\Helper\ExceptsMarketing">
+    <type name="Buzzi\Publish\Helper\AcceptsMarketing">
         <arguments>
             <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
         </arguments>
     </type>
 
     <type name="Magento\Customer\Api\AccountManagementInterface">
-        <plugin name="buzzi_publish_excepts_marketing" type="Buzzi\Publish\Plugin\Customer\AccountManagement" />
+        <plugin name="buzzi_publish_accepts_marketing" type="Buzzi\Publish\Plugin\Customer\AccountManagement" />
     </type>
     <type name="Magento\Newsletter\Model\Subscriber">
-        <plugin name="buzzi_publish_excepts_marketing" type="Buzzi\Publish\Plugin\Newsletter\Subscriber" />
+        <plugin name="buzzi_publish_accepts_marketing" type="Buzzi\Publish\Plugin\Newsletter\Subscriber" />
     </type>
 
     <type name="Buzzi\Publish\Model\Submission\PayloadPacker">

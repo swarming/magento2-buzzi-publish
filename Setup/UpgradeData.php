@@ -8,7 +8,7 @@ namespace Buzzi\Publish\Setup;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Customer\Model\Customer;
-use Buzzi\Publish\Helper\ExceptsMarketing;
+use Buzzi\Publish\Helper\AcceptsMarketing;
 
 class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
 {
@@ -60,7 +60,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
         $setup->startSetup();
 
         if (version_compare($context->getVersion(), '1.1.0', '<')) {
-            $this->addExceptsMarketingCustomerAttribute($setup);
+            $this->addAcceptsMarketingCustomerAttribute($setup);
         }
 
         $setup->endSetup();
@@ -70,15 +70,15 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
      * @return void
      */
-    private function addExceptsMarketingCustomerAttribute($setup)
+    private function addAcceptsMarketingCustomerAttribute($setup)
     {
         $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
 
         $customerSetup->addAttribute(
             Customer::ENTITY,
-            ExceptsMarketing::CUSTOMER_ATTR,
+            AcceptsMarketing::CUSTOMER_ATTR,
             [
-                'label'      => 'Excepts Marketing',
+                'label'      => 'Accepts Marketing',
                 'type'       => 'int',
                 'input'      => 'boolean',
                 'source'     => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
@@ -91,7 +91,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             ]
         );
 
-        $attribute = $this->eavConfig->getAttribute(Customer::ENTITY, ExceptsMarketing::CUSTOMER_ATTR);
+        $attribute = $this->eavConfig->getAttribute(Customer::ENTITY, AcceptsMarketing::CUSTOMER_ATTR);
         $attribute->addData(['used_in_forms' => ['adminhtml_customer', 'customer_account_create']]);
         $attribute->save();
 

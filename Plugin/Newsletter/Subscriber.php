@@ -6,7 +6,7 @@
 namespace Buzzi\Publish\Plugin\Newsletter;
 
 use Magento\Newsletter\Model\Subscriber as NewsletterSubscriber;
-use Buzzi\Publish\Helper\ExceptsMarketing;
+use Buzzi\Publish\Helper\AcceptsMarketing;
 
 class Subscriber
 {
@@ -32,7 +32,7 @@ class Subscriber
     public function afterSubscribe(NewsletterSubscriber $subject, $result)
     {
         if ($subject->getCustomerId() && $result === NewsletterSubscriber::STATUS_SUBSCRIBED) {
-            $this->updateExceptsMarketing($subject->getCustomerId(), true);
+            $this->updateAcceptsMarketing($subject->getCustomerId(), true);
         }
 
         return $result;
@@ -46,7 +46,7 @@ class Subscriber
     public function afterConfirm(NewsletterSubscriber $subject, $result)
     {
         if ($subject->getCustomerId()) {
-            $this->updateExceptsMarketing($subject->getCustomerId(), true);
+            $this->updateAcceptsMarketing($subject->getCustomerId(), true);
         }
 
         return $result;
@@ -60,7 +60,7 @@ class Subscriber
     public function afterUnsubscribe(NewsletterSubscriber $subject, $result)
     {
         if ($subject->getCustomerId()) {
-            $this->updateExceptsMarketing($subject->getCustomerId(), false);
+            $this->updateAcceptsMarketing($subject->getCustomerId(), false);
         }
 
         return $result;
@@ -68,16 +68,16 @@ class Subscriber
 
     /**
      * @param int $customerId
-     * @param bool $exceptsMarketing
+     * @param bool $acceptsMarketing
      * @return void
      */
-    private function updateExceptsMarketing($customerId, $exceptsMarketing)
+    private function updateAcceptsMarketing($customerId, $acceptsMarketing)
     {
         $customer = $this->customerRepository->getById($customerId);
-        $exceptsMarketingAttribute = $customer->getCustomAttribute(ExceptsMarketing::CUSTOMER_ATTR);
+        $acceptsMarketingAttribute = $customer->getCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR);
 
-        if (!$exceptsMarketingAttribute || (bool)$exceptsMarketingAttribute->getValue() !== $exceptsMarketing) {
-            $customer->setCustomAttribute(ExceptsMarketing::CUSTOMER_ATTR, (int)$exceptsMarketing);
+        if (!$acceptsMarketingAttribute || (bool)$acceptsMarketingAttribute->getValue() !== $acceptsMarketing) {
+            $customer->setCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR, (int)$acceptsMarketing);
             $this->customerRepository->save($customer);
         }
     }

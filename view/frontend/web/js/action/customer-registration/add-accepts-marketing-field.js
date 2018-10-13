@@ -15,7 +15,7 @@ define([
     var collectGuests = buzziStorage.get('collectGuests') ? 1 : 0;
 
     $('<input />').attr('type', 'hidden')
-        .attr('name', "excepts_marketing")
+        .attr('name', "accepts_marketing")
         .attr('value', collectGuests)
         .appendTo('form.form-create-account');
 });

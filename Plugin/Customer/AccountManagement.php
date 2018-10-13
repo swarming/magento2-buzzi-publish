@@ -7,7 +7,7 @@ namespace Buzzi\Publish\Plugin\Customer;
 
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
-use Buzzi\Publish\Helper\ExceptsMarketing;
+use Buzzi\Publish\Helper\AcceptsMarketing;
 
 class AccountManagement
 {
@@ -40,7 +40,7 @@ class AccountManagement
         $password = null,
         $redirectUrl = ''
     ) {
-        $this->processDefaultExceptsMarketing($customer);
+        $this->processDefaultAcceptsMarketing($customer);
     }
 
     /**
@@ -58,20 +58,20 @@ class AccountManagement
         $hash,
         $redirectUrl = ''
     ) {
-        $this->processDefaultExceptsMarketing($customer);
+        $this->processDefaultAcceptsMarketing($customer);
     }
 
     /**
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      * @return void
      */
-    private function processDefaultExceptsMarketing(CustomerInterface $customer)
+    private function processDefaultAcceptsMarketing(CustomerInterface $customer)
     {
-        $exceptsMarketingAttribute = $customer->getCustomAttribute(ExceptsMarketing::CUSTOMER_ATTR);
-        if (!$exceptsMarketingAttribute || $exceptsMarketingAttribute->getValue() === false) {
+        $acceptsMarketingAttribute = $customer->getCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR);
+        if (!$acceptsMarketingAttribute || $acceptsMarketingAttribute->getValue() === false) {
             $customer->setCustomAttribute(
-                ExceptsMarketing::CUSTOMER_ATTR,
-                (int)$this->configGeneral->getDefaultExceptsMarketing($customer->getStoreId())
+                AcceptsMarketing::CUSTOMER_ATTR,
+                (int)$this->configGeneral->getDefaultAcceptsMarketing($customer->getStoreId())
             );
         }
     }

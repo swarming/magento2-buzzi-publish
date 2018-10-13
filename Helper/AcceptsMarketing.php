@@ -7,9 +7,9 @@ namespace Buzzi\Publish\Helper;
 use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Customer\Model\Customer;
 
-class ExceptsMarketing
+class AcceptsMarketing
 {
-    const CUSTOMER_ATTR = 'excepts_marketing';
+    const CUSTOMER_ATTR = 'accepts_marketing';
 
     /**
      * @var \Magento\Customer\Model\Session
@@ -47,27 +47,27 @@ class ExceptsMarketing
      * @param \Magento\Customer\Api\Data\CustomerInterface|null $customer
      * @return bool
      */
-    public function isExcepts($eventType, $storeId = null, CustomerInterface $customer = null)
+    public function isAccepts($eventType, $storeId = null, CustomerInterface $customer = null)
     {
-        $isExcepts = true;
+        $isAccepts = true;
 
         if ($this->configEvents->isSetFlag($eventType, 'respect_accepts_marketing', $storeId)) {
             $customer = $customer ?? $this->customerSession->getCustomer()->getDataModel();
-            $isExcepts = $this->isExceptsMarketing($customer);
+            $isAccepts = $this->isAcceptsMarketing($customer);
         }
 
-        return $isExcepts;
+        return $isAccepts;
     }
 
     /**
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      * @return bool
      */
-    private function isExceptsMarketing($customer)
+    private function isAcceptsMarketing($customer)
     {
-        $exceptsMarketingAttribute = $customer->getCustomAttribute(self::CUSTOMER_ATTR);
-        return $exceptsMarketingAttribute
-            ? (bool)$exceptsMarketingAttribute->getValue()
+        $acceptsMarketingAttribute = $customer->getCustomAttribute(self::CUSTOMER_ATTR);
+        return $acceptsMarketingAttribute
+            ? (bool)$acceptsMarketingAttribute->getValue()
             : (bool)$this->eavConfig->getAttribute(Customer::ENTITY, self::CUSTOMER_ATTR)->getDefaultValue();
     }
 }
