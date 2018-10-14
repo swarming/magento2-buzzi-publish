@@ -17,9 +17,6 @@
         </arguments>
     </type>
 
-    <type name="Magento\Customer\Api\AccountManagementInterface">
-        <plugin name="buzzi_publish_accepts_marketing" type="Buzzi\Publish\Plugin\Customer\AccountManagement" />
-    </type>
     <type name="Magento\Newsletter\Model\Subscriber">
         <plugin name="buzzi_publish_accepts_marketing" type="Buzzi\Publish\Plugin\Newsletter\Subscriber" />
     </type>
