@@ -24,6 +24,7 @@
                     <backend_model>Buzzi\Publish\Model\Config\System\Backend\DefaultAcceptsMarketing</backend_model>
                     <depends>
                         <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
                     </depends>
                 </field>
 
