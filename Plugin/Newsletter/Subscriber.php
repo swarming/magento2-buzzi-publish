@@ -40,6 +40,23 @@ class Subscriber
 
     /**
      * @param \Magento\Newsletter\Model\Subscriber $subject
+     * @param string $result
+     * @return string
+     */
+    public function afterSubscribeCustomerById(NewsletterSubscriber $subject, $result)
+    {
+        if ($subject->getCustomerId()
+            && $subject->isStatusChanged()
+            && $subject->getStatus() === NewsletterSubscriber::STATUS_SUBSCRIBED
+        ) {
+            $this->updateAcceptsMarketing($subject->getCustomerId(), true, true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Magento\Newsletter\Model\Subscriber $subject
      * @param bool $result
      * @return bool
      */
@@ -67,14 +84,33 @@ class Subscriber
     }
 
     /**
+     * @param \Magento\Newsletter\Model\Subscriber $subject
+     * @param string $result
+     * @return string
+     */
+    public function afterUnsubscribeCustomerById(NewsletterSubscriber $subject, $result)
+    {
+        if ($subject->getCustomerId() && $subject->isStatusChanged()) {
+            $this->updateAcceptsMarketing($subject->getCustomerId(), false, true);
+        }
+
+        return $result;
+    }
+
+    /**
      * @param int $customerId
      * @param bool $acceptsMarketing
+     * @param bool $updateSubscribeFlag
      * @return void
      */
-    private function updateAcceptsMarketing($customerId, $acceptsMarketing)
+    private function updateAcceptsMarketing($customerId, $acceptsMarketing, $updateSubscribeFlag = false)
     {
         $customer = $this->customerRepository->getById($customerId);
         $acceptsMarketingAttribute = $customer->getCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR);
+
+        if ($updateSubscribeFlag) {
+            $customer->getExtensionAttributes()->setIsSubscribed($acceptsMarketing);
+        }
 
         if (!$acceptsMarketingAttribute || (bool)$acceptsMarketingAttribute->getValue() !== $acceptsMarketing) {
             $customer->setCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR, (int)$acceptsMarketing);
