@@ -12,24 +12,24 @@ class Js extends \Magento\Backend\Block\Template
     private $configGeneral;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var \Magento\Framework\Json\EncoderInterface
      */
-    private $serializerJson;
+    private $jsonEncoder;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Buzzi\Publish\Model\Config\General $configGeneral
-     * @param \Magento\Framework\Serialize\Serializer\Json $serializerJson
+     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
      * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Buzzi\Publish\Model\Config\General $configGeneral,
-        \Magento\Framework\Serialize\Serializer\Json $serializerJson,
+        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         array $data = []
     ) {
         $this->configGeneral = $configGeneral;
-        $this->serializerJson = $serializerJson;
+        $this->jsonEncoder = $jsonEncoder;
         parent::__construct($context, $data);
     }
 
@@ -50,6 +50,6 @@ class Js extends \Magento\Backend\Block\Template
      */
     public function getConfigJson()
     {
-        return $this->serializerJson->serialize($this->getConfig());
+        return $this->jsonEncoder->encode($this->getConfig());
     }
 }

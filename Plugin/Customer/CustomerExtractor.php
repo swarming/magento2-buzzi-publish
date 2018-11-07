@@ -25,19 +25,21 @@ class CustomerExtractor
 
     /**
      * @param \Magento\Customer\Model\CustomerExtractor $subject
-     * @param \Magento\Customer\Api\Data\CustomerInterface $result
+     * @param \Closure $closure
      * @param string $formCode
      * @param \Magento\Framework\App\RequestInterface $request
      * @param array $attributeValues
      * @return \Magento\Customer\Api\Data\CustomerInterface
      */
-    public function afterExtract(
+    public function aroundExtract(
         \Magento\Customer\Model\CustomerExtractor $subject,
-        $result,
+        \Closure $closure,
         $formCode,
         \Magento\Framework\App\RequestInterface $request,
         array $attributeValues = []
     ) {
+        $result = $closure($formCode, $request, $attributeValues);
+
         if ('customer_account_create' === $formCode && $request->getParam('accepts_marketing') === null) {
             $this->updateDefaultValue($result);
         }
