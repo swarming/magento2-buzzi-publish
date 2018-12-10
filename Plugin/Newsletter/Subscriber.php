@@ -7,6 +7,8 @@ namespace Buzzi\Publish\Plugin\Newsletter;
 
 use Magento\Newsletter\Model\Subscriber as NewsletterSubscriber;
 use Buzzi\Publish\Helper\AcceptsMarketing;
+use Magento\Customer\Api\Data\CustomerInterface;
+use Magento\Customer\Api\Data\CustomerExtensionInterface;
 
 class Subscriber
 {
@@ -16,12 +18,20 @@ class Subscriber
     private $customerRepository;
 
     /**
+     * @var \Magento\Framework\Api\ExtensionAttributesFactory
+     */
+    private $extensionFactory;
+
+    /**
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+     * @param \Magento\Framework\Api\ExtensionAttributesFactory|null $extensionFactory
      */
     public function __construct(
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory
     ) {
         $this->customerRepository = $customerRepository;
+        $this->extensionFactory = $extensionFactory;
     }
 
     /**
@@ -109,12 +119,26 @@ class Subscriber
         $acceptsMarketingAttribute = $customer->getCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR);
 
         if ($updateSubscribeFlag) {
-            $customer->getExtensionAttributes()->setIsSubscribed($acceptsMarketing);
+            $customerExtensionAttributes = $this->getCustomerExtensionAttributes($customer);
+            $customerExtensionAttributes->setIsSubscribed($acceptsMarketing);
         }
 
         if (!$acceptsMarketingAttribute || (bool)$acceptsMarketingAttribute->getValue() !== $acceptsMarketing) {
             $customer->setCustomAttribute(AcceptsMarketing::CUSTOMER_ATTR, (int)$acceptsMarketing);
             $this->customerRepository->save($customer);
         }
+    }
+
+    /**
+     * @param \Magento\Customer\Api\Data\CustomerInterface $customer
+     * @return \Magento\Customer\Api\Data\CustomerExtensionInterface
+     */
+    private function getCustomerExtensionAttributes(CustomerInterface $customer): CustomerExtensionInterface
+    {
+        $customerExtensionAttributes = $customer->getExtensionAttributes()
+            ?: $this->extensionFactory->create(CustomerInterface::class);
+
+        $customer->setExtensionAttributes($customerExtensionAttributes);
+        return $customerExtensionAttributes;
     }
 }
