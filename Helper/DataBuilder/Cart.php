@@ -80,7 +80,7 @@ class Cart
 
         $items = $quote->getAllVisibleItems();
         foreach ($items as $item) {
-            $itemPayload = $this->dataBuilderProduct->getProductData($item->getProduct());
+            $itemPayload = $this->dataBuilderProduct->getProductData($item->getProduct(), $quote->getStoreId());
             $itemPayload['base_price'] = (string)$item->getPrice();
             $itemPayload['product_sku'] = (string)$item->getSku();
             $itemPayload['quantity'] = (int)$item->getQty();

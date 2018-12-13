@@ -49,9 +49,10 @@ class Product
 
     /**
      * @param \Magento\Catalog\Model\Product $product
+     * @param int|null $storeId
      * @return array
      */
-    public function getProductData($product)
+    public function getProductData($product, $storeId = null)
     {
         $payload = [
             'base_price' => (string)$product->getPrice(),
@@ -59,7 +60,7 @@ class Product
             'product_sku' => (string)$product->getSku(),
             'product_name' => (string)$product->getName(),
             'product_description' => (string)$product->getShortDescription(),
-            'product_image_url' => (string)$this->getFrontendProductImageUrl($product),
+            'product_image_url' => (string)$this->getFrontendProductImageUrl($product, $storeId),
             'product_url' => (string)$product->getProductUrl(),
         ];
 
@@ -84,15 +85,29 @@ class Product
 
     /**
      * @param \Magento\Catalog\Model\Product $product
+     * @param int|null $storeId
      * @return string
      */
-    protected function getFrontendProductImageUrl($product)
+    protected function getFrontendProductImageUrl($product, $storeId = null)
     {
-        $this->design->setDesignTheme(
-            $this->design->getConfigurationDesignTheme(Area::AREA_FRONTEND),
-            Area::AREA_FRONTEND
-        );
+        if ($this->design->getArea() !== Area::AREA_FRONTEND) {
+            $this->setFrontendTheme($storeId);
+        }
 
         return $this->imageHelper->init($product, 'product_thumbnail_image')->getUrl();
+    }
+
+    /**
+     * @param int|null $storeId
+     * @return void
+     */
+    private function setFrontendTheme($storeId = null)
+    {
+        $params = $storeId ? ['store' => $storeId] : [];
+
+        $this->design->setDesignTheme(
+            $this->design->getConfigurationDesignTheme(Area::AREA_FRONTEND, $params),
+            Area::AREA_FRONTEND
+        );
     }
 }
