@@ -19,6 +19,10 @@ define([
                 : window.buzzi.collect_guest_data;
         },
 
+        isAllowCollectData: function () {
+            return this.isAllowCollectGuestData || this.isCustomerLoggedIn();
+        },
+
         getMaxGuestEvents: function () {
             return window.buzzi.max_guest_events;
         }

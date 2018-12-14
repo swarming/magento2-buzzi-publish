@@ -10,7 +10,7 @@ define([
     "use strict";
 
     return function (eventType, eventData, uniqueKey) {
-        if ((!buzziConfig.isCustomerLoggedIn() && !buzziConfig.isAllowCollectGuestData()) || !uniqueKey) {
+        if (!buzziConfig.isAllowCollectData() || !uniqueKey) {
             return;
         }
 
