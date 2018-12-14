@@ -5,14 +5,14 @@
 define([
     'jquery',
     'Buzzi_Publish/js/model/storage',
-    'Magento_Customer/js/customer-data'
-], function ($, buzziStorage, customerData) {
+    'Buzzi_Publish/js/model/config'
+], function ($, buzziStorage, buzziConfig) {
     'use strict';
 
     /**
      * Return found email if customer is not logged in
      */
     return function () {
-        return !customerData.get('customer')().firstname && buzziStorage.has('guestEmail') ? buzziStorage.get('guestEmail') : null;
+        return !buzziConfig.isCustomerLoggedIn() && buzziStorage.has('guestEmail') ? buzziStorage.get('guestEmail') : null;
     };
 });

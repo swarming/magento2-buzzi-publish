@@ -3,11 +3,16 @@
  */
 
 define([
-    'Buzzi_Publish/js/model/storage'
-], function (buzziStorage) {
+    'Buzzi_Publish/js/model/storage',
+    'Magento_Customer/js/customer-data'
+], function (buzziStorage, customerData) {
     "use strict";
 
     return {
+        isCustomerLoggedIn: function () {
+            return !!customerData.get('customer')().firstname;
+        },
+
         isAllowCollectGuestData: function () {
             return buzziStorage.has('collectGuests')
                 ? buzziStorage.get('collectGuests')
