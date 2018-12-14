@@ -11,7 +11,7 @@ define([
 ], function ($, buzziStorage, buzziConfig, validator, sendSavedEvents) {
     'use strict';
 
-    if (!buzziConfig.isAllowCollectGuestData()) {
+    if (!buzziConfig.isAllowCollectGuestData() && !buzziConfig.isCustomerLoggedIn()) {
         buzziStorage.unset('events');
         return;
     }
