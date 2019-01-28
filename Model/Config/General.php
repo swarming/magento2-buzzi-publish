@@ -20,6 +20,7 @@ class General extends \Buzzi\Base\Model\Config\General
     const XML_PATH_MAX_GUEST_EVENTS = 'buzzi_base/publish/max_guest_events';
 
     const XML_PATH_PRODUCT_IMAGE = 'buzzi_base/publish/product_image';
+    const XML_PATH_STRIP_PRODUCT_URL = 'buzzi_base/publish/strip_product_url';
 
     const XML_PATH_CUSTOM_GLOBAL_SCHEDULE = 'buzzi_base/publish/custom_global_schedule';
     const XML_PATH_GLOBAL_SCHEDULE = 'buzzi_base/publish/global_schedule';
@@ -82,6 +83,15 @@ class General extends \Buzzi\Base\Model\Config\General
     public function getProductImage($storeId = null)
     {
         return $this->scopeConfig->getValue(self::XML_PATH_PRODUCT_IMAGE, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * @param int|null $storeId
+     * @return bool
+     */
+    public function isStripProductUrl($storeId = null)
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_STRIP_PRODUCT_URL, ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     /**

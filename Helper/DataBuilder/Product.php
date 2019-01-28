@@ -71,7 +71,7 @@ class Product
             'product_name' => (string)$product->getName(),
             'product_description' => (string)$product->getShortDescription(),
             'product_image_url' => (string)$this->getFrontendProductImageUrl($product, $storeId),
-            'product_url' => (string)$product->getProductUrl(),
+            'product_url' => (string)$this->getProductUrl($product, $storeId),
         ];
 
         $transport = new DataObject(['product' => $product, 'payload' => $payload]);
@@ -91,6 +91,28 @@ class Product
         $categoryCollection->addIdFilter($categoryIds);
         $categoryCollection->addNameToResult();
         return $categoryCollection->getColumnValues('name');
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @param int|null $storeId
+     * @return string
+     */
+    private function getProductUrl($product, $storeId = null)
+    {
+        return $this->configGeneral->isStripProductUrl($storeId)
+            ? $this->stripProductUrl($product->getProductUrl(false))
+            : $product->getProductUrl(false);
+    }
+
+    /**
+     * @param string $productUrl
+     * @return string
+     */
+    private function stripProductUrl($productUrl)
+    {
+        $urlParts = explode('?', $productUrl);
+        return reset($urlParts);
     }
 
     /**
