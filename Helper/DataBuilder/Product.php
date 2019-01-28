@@ -6,6 +6,8 @@ namespace Buzzi\Publish\Helper\DataBuilder;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\App\Area;
+use Magento\Framework\App\ObjectManager;
+use Buzzi\Publish\Model\Config\General as GeneralConfig;
 
 class Product
 {
@@ -30,21 +32,29 @@ class Product
     protected $eventDispatcher;
 
     /**
+     * @var \Buzzi\Publish\Model\Config\General
+     */
+    private $configGeneral;
+
+    /**
      * @param \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
      * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param \Magento\Framework\View\DesignInterface $design
      * @param \Magento\Framework\Event\ManagerInterface $eventDispatcher
+     * @param \Buzzi\Publish\Model\Config\General $configGeneral
      */
     public function __construct(
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Magento\Catalog\Helper\Image $imageHelper,
         \Magento\Framework\View\DesignInterface $design,
-        \Magento\Framework\Event\ManagerInterface $eventDispatcher
+        \Magento\Framework\Event\ManagerInterface $eventDispatcher,
+        \Buzzi\Publish\Model\Config\General $configGeneral = null
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
         $this->imageHelper = $imageHelper;
         $this->design = $design;
         $this->eventDispatcher = $eventDispatcher;
+        $this->configGeneral = $configGeneral ?: ObjectManager::getInstance()->get(GeneralConfig::class);
     }
 
     /**
@@ -94,7 +104,7 @@ class Product
             $this->setFrontendTheme($storeId);
         }
 
-        return $this->imageHelper->init($product, 'product_thumbnail_image')->getUrl();
+        return $this->imageHelper->init($product, $this->configGeneral->getProductImage($storeId))->getUrl();
     }
 
     /**

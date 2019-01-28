@@ -19,6 +19,8 @@ class General extends \Buzzi\Base\Model\Config\General
     const XML_PATH_ALLOW_COLLECT_GUEST_DATA = 'buzzi_base/publish/allow_collect_guest_data';
     const XML_PATH_MAX_GUEST_EVENTS = 'buzzi_base/publish/max_guest_events';
 
+    const XML_PATH_PRODUCT_IMAGE = 'buzzi_base/publish/product_image';
+
     const XML_PATH_CUSTOM_GLOBAL_SCHEDULE = 'buzzi_base/publish/custom_global_schedule';
     const XML_PATH_GLOBAL_SCHEDULE = 'buzzi_base/publish/global_schedule';
     const XML_PATH_GLOBAL_START_TIME = 'buzzi_base/publish/global_start_time';
@@ -71,6 +73,15 @@ class General extends \Buzzi\Base\Model\Config\General
     public function getMaxGuestEvents($storeId = null)
     {
         return $this->scopeConfig->getValue(self::XML_PATH_MAX_GUEST_EVENTS, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * @param int|null $storeId
+     * @return int
+     */
+    public function getProductImage($storeId = null)
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_PRODUCT_IMAGE, ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     /**

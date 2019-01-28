@@ -61,6 +61,24 @@
                     </depends>
                 </field>
 
+                <field id="data_options" translate="label" sortOrder="55" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Data Options</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
+                    </depends>
+                </field>
+                <field id="product_image" translate="label" type="select" sortOrder="56" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Product Image</label>
+                    <source_model>Buzzi\Publish\Model\Config\System\Source\ProductImageType</source_model>
+                    <comment>The image will be used for all product images in events.</comment>
+                    <depends>
+                        <field id="buzzi_base/general/enabled">1</field>
+                        <field id="enabled_publish">1</field>
+                    </depends>
+                </field>
+
                 <field id="global_cron_settings" translate="label" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Global Publish Schedule</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
