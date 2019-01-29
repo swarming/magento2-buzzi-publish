@@ -79,8 +79,9 @@
                     </depends>
                 </field>
                 <field id="strip_product_url" translate="label" type="select" sortOrder="58" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Strip Product's Url Parameters</label>
+                    <label>Strip Product URL Parameters</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Remove any parameters that Magento adds to product URLs. Magento may add store scope parameters to product URLs when the current store and product store are different.</comment>
                     <depends>
                         <field id="buzzi_base/general/enabled">1</field>
                         <field id="enabled_publish">1</field>
