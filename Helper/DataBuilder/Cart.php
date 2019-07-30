@@ -19,15 +19,23 @@ class Cart
     protected $eventDispatcher;
 
     /**
+     * @var \Magento\Directory\Model\Currency
+     */
+    protected $currency;
+
+    /**
      * @param \Buzzi\Publish\Helper\DataBuilder\Product $dataBuilderProduct
      * @param \Magento\Framework\Event\ManagerInterface $eventDispatcher
+     * @param \Magento\Directory\Model\Currency $currency
      */
     public function __construct(
         \Buzzi\Publish\Helper\DataBuilder\Product $dataBuilderProduct,
-        \Magento\Framework\Event\ManagerInterface $eventDispatcher
+        \Magento\Framework\Event\ManagerInterface $eventDispatcher,
+        \Magento\Directory\Model\Currency $currency
     ) {
         $this->dataBuilderProduct = $dataBuilderProduct;
         $this->eventDispatcher = $eventDispatcher;
+        $this->currency = $currency;
     }
 
     /**
@@ -81,7 +89,7 @@ class Cart
         $items = $quote->getAllVisibleItems();
         foreach ($items as $item) {
             $itemPayload = $this->dataBuilderProduct->getProductData($item->getProduct(), $quote->getStoreId());
-            $itemPayload['base_price'] = (string)$item->getPrice();
+            $itemPayload['base_price'] = (string)$this->currency->format($item->getPrice(), ['display'=>\Zend_Currency::NO_SYMBOL], false);
             $itemPayload['product_sku'] = (string)$item->getSku();
             $itemPayload['quantity'] = (int)$item->getQty();
 
