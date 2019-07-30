@@ -2,7 +2,7 @@
   "name": "swarming/magento2-buzzi-publish",
   "description": "Magento 2 Buzzi.io Publish",
   "type": "magento2-module",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "license": ["proprietary"],
   "authors": [
     {
